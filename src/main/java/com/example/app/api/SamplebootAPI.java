@@ -7,13 +7,20 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.domain.model.Sample;
+import com.example.domain.repository.SampleRepository;
 
 @RestController
 public class SamplebootAPI {
 
     private static Logger logger = LoggerFactory.getLogger(SamplebootAPI.class);
+
+    @Autowired
+    SampleRepository sampleService;
 
     @RequestMapping(value = "/")
     String top() {
@@ -22,6 +29,12 @@ public class SamplebootAPI {
 
     @RequestMapping(value = "/hello")
     String hello() {
+
+        List<Sample> samples = sampleService.findAll();
+        for (Sample sample : samples) {
+            System.out.println(sample.getTestId());
+        }
+
         return "Hello World!";
     }
 

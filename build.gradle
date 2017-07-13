@@ -19,10 +19,18 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+
+    maven {
+        url 'http://10.146.2.101/oisystem/mvn-repo/raw/master'
+    }
 }
 
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile('external.com.oracle:ojdbc6:11.1.0.6.0')
+    compile('external.com.oracle:orai18n:11.1.0.6.0')
 }
