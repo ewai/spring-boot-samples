@@ -28,17 +28,17 @@ public class SamplebootAPI {
     }
 
     @RequestMapping(value = "/hello")
-    String hello() {
+    Object hello() {
 
         List<Sample> samples = sampleService.findAll();
         for (Sample sample : samples) {
             System.out.println(sample.getTestId());
         }
 
-        return "Hello World!";
+        return samples;
     }
 
-    @RequestMapping(value = "/*")
+    @RequestMapping(value = "/param/*")
     Object hello2() {
         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         Map<String, String> map = new HashMap<String, String>();
