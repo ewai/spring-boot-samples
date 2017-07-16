@@ -1,6 +1,6 @@
-# sampleboot
+# spring-boot-samples
 
-study spring boot.
+spring boot learning done.
 
 * rest controller
 * controller
