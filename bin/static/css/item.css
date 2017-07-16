@@ -1,0 +1,26 @@
+table#categorys tr {
+  cursor:pointer;
+}
+
+table#categorys tr:hover {
+  background:#DDDDDD
+}
+
+th {
+  background-color:#CCCCCC;
+}
+.sidebar {
+  display: none;
+}
+ 
+@media screen and (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto
+  }
+}
