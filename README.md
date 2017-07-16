@@ -1,7 +1,6 @@
 # spring-boot-samples
 
-spring boot learning done.
-
+done.
 * rest controller
 * controller
 * service
