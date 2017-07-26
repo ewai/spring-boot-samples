@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.model.Sample;
 import com.example.domain.repository.SampleRepository;
-import com.example.domain.repository.ShouhinDao;
 import com.example.domain.repository.ShouhinDaoImpl;
 
 @RestController
