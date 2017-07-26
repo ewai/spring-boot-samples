@@ -6,10 +6,11 @@ done.
 * service
 * repository
 * jpa
+* auth
 
 next..
 * thymeleaf
 * config
-* auth
 * test
 * security
+
