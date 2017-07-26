@@ -33,6 +33,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found for name: " + username);
         }
+
         logger.info("user.getUsername()=" + user.getUsername());
 
         return user;
