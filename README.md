@@ -22,16 +22,19 @@ next..
 
 ## Sample url
 
-* shouhin list *
+*shouhin list*
 http://localhost:8080/shouhin
 
-* spring data rest api list*
+*spring data rest api list*
 http://localhost:8080/rest
 
-crud
+*crud*
 http://localhost:8080/rest/shouhins
 
-* actuator *
+*actuator*
 http://localhost:8080/env
 etc..
+
+*sendmail*
+http://localhost:8080/sendmail
 
