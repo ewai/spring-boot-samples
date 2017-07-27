@@ -7,10 +7,13 @@ done.
 * repository
 * jpa
 * auth
+* security
+* actuator
+* mail
+* spring data rest
 
 next..
 * thymeleaf
 * config
 * test
-* security
 
