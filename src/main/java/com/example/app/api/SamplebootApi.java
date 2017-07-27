@@ -12,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,4 +76,20 @@ public class SamplebootApi {
         logger.info("log test................");
         return list;
     }
+
+    @Autowired
+    private MailSender sender;
+
+    @RequestMapping(value = "/sendmail")
+    void sendMail() {
+        SimpleMailMessage msg = new SimpleMailMessage();
+
+        msg.setFrom("xxx@xxx.co.jp");
+        msg.setTo("xxx@xxx.co.jp");
+        msg.setSubject("テストメール");
+        msg.setText("Spring Boot より本文送信");
+
+        this.sender.send(msg);
+    }
+
 }

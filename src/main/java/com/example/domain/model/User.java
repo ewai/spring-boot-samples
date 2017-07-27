@@ -1,5 +1,7 @@
 package com.example.domain.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -15,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+
+    public enum Authority {ROLE_USER, ROLE_ADMIN}
 
     @Id
     @Column(nullable = false, unique = true)
@@ -25,7 +30,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-      return null;
+      // try actuator
+      Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+      authorities.add(new SimpleGrantedAuthority("ACTUATOR"));
+      return authorities;
     }
 
     @Override
