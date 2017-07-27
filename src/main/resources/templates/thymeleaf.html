@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="../webjars/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css"></link>
+    <script type="text/javascript" src="../webjars/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <p><h1 id="title">Thymeleaf</h1></p>
+        </div>
+        <div class="row">
+            <p th:text="${test}">111</p>
+        </div>
+    </div>
+</body>
+</html>
