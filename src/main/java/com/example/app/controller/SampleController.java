@@ -1,14 +1,13 @@
 package com.example.app.controller;
 
-import java.math.BigDecimal;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.domain.model.Shouhin;
 import com.example.domain.service.ShouhinService;
@@ -21,13 +20,22 @@ public class SampleController {
     @Autowired
     ShouhinService shouhinService;
 
-    @RequestMapping("sample")
-    String loginForm(Model model) {
-        Shouhin shouhin = shouhinService.findByShouhinIdAndShouhinVer("1234", new BigDecimal(1729));
-        if (shouhin != null) {
-            logger.info("shouhin.getShouhin()=" + shouhin.getShouhin());
-            model.addAttribute("shouhin", shouhin);
-        }
+    @RequestMapping(value="/sample", method=RequestMethod.GET)
+    String loginForm(@ModelAttribute Shouhin shouhinForm, Model model) {
+
+        shouhinForm.setShouhinId("shouhinId");
+
+        model.addAttribute("shouhinForm", shouhinForm);
+        return "sample";
+    }
+
+    @RequestMapping(value="/sample", method=RequestMethod.POST)
+    String save(@ModelAttribute Shouhin shouhinForm, Model model) {
+        logger.info("shouhin.getShouhinId()=" + shouhinForm.getShouhinId());
+
+        shouhinForm.setShouhin("shouhin");
+        model.addAttribute("shouhinForm", shouhinForm);
+
         return "sample";
     }
 }

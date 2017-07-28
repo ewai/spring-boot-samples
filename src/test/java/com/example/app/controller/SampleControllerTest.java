@@ -1,7 +1,9 @@
 package com.example.app.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +32,12 @@ public class SampleControllerTest {
     @Test
     @WithMockUser(username="0001", password="password8")
     public void test初期表示() throws Exception {
-        mvc.perform(get("/sample")).andExpect(status().isOk()).andExpect(content().string(containsString("sample")));
+        mvc.perform(get("/sample")).andExpect(status().isOk()).andExpect(content().string(containsString("shouhinId")));
+    }
+
+    @Test
+    @WithMockUser(username="0001", password="password8")
+    public void testSubmit() throws Exception {
+        mvc.perform(post("/sample").with(csrf())).andExpect(status().isOk()).andExpect(content().string(containsString("shouhin")));
     }
 }

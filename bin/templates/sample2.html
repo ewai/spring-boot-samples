@@ -12,15 +12,10 @@
 </head>
 <body>
 
-<h1>Sample</h1>
+<h1>Sample2</h1>
 
-
-<form action="#" th:action="@{/sample}" th:object="${shouhinForm}" method="post">
-  <p>shouhinId:<input type="text" th:field="*{shouhinId}" /></p>
-  <p>shouhin:<input type="text" th:field="*{shouhin}" /></p>
-  <button type="submit" class="btn btn-default">confirm</button>
-</form>
-
+  商品ID:<p th:field="${shouhin.shouhinId}" />
+  商品名:<p th:field="${shouhin.shouhin}" />
 
 </body>
 </html>
