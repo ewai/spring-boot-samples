@@ -4,18 +4,90 @@
     <title>Thymeleaf</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="../webjars/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css"></link>
-    <script type="text/javascript" src="../webjars/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="../webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css"></link>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <p><h1 id="title">Thymeleaf</h1></p>
-        </div>
-        <div class="row">
-            <p th:text="${test}">111</p>
-        </div>
+
+<h1 id="title">Thymeleaf</h1>
+
+<p th:text="${test}"></p>
+<p th:text="${shouhin.shouhin}"></p>
+
+<div>
+    <div th:if="${test} == 123">
+        <p>aaa</p>
     </div>
+    <div th:unless="${test} == 123">
+        <p>bbb</p>
+    </div>
+</div>
+
+<div th:with="x=${100},y=${200}">
+    <p th:text="${x}"></p>
+    <p th:text="${y}"></p>
+
+    <div th:if="${x} == 100">
+        <p>xxx</p>
+    </div>
+    <div th:unless="${x} == 100">
+        <p>yyy</p>
+    </div>
+
+</div>
+
+
+<p th:text="${#dates.format(#dates.createNow(), 'yyyy年MM月dd日 HH時mm分ss秒')}"></p>
+
+<p th:text="${#numbers.formatInteger(1000000, 3, 'COMMA')}"></p>
+<p th:text="${#numbers.formatDecimal(123456.789, 3, 'COMMA', 2, 'POINT')}"></p>
+
+<div th:with="a=1">
+    <div th:switch="${a}">
+        <p th:case="1" th:text="|${a}月|"></p>
+        <p th:case="2" th:text="|${a}月|"></p>
+        <p th:case="3" th:text="|${a}月|"></p>
+        <p th:case="*">対象なし</p>
+    </div>
+</div>
+
+<p>---</p>
+
+<table th:each="e : ${map}">
+  <tr>
+    <td th:text="${e.getKey()}"></td>
+    <td th:text="${e.getValue()}"></td>
+  </tr>
+</table>
+
+<p>---</p>
+
+<table th:each="map : ${list}">
+  <tr>
+    <td>
+      <ul>
+        <li th:each="e : ${map}" th:text="${e.getValue()}"></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<p>---</p>
+
+<th:block th:each="e : ${map}">
+  <ul>
+    <li th:text="${e.getValue()}"></li>
+  </ul>
+</th:block>
+
+<p>---</p>
+
+
+<table th:each="shouhin : ${shouhinlist}">
+  <tr th:object="${shouhin}">
+    <td th:text="*{shouhinId}"></td>
+    <td th:text="*{shouhin}"></td>
+  </tr>
+</table>
+
 </body>
 </html>

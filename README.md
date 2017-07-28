@@ -13,9 +13,9 @@ done.
 * actuator
 * mail
 * spring data rest
+* thymeleaf
 
 next..
-* thymeleaf
 * config
 * test
 
