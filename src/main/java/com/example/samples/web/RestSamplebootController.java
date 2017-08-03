@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,12 @@ import com.example.samples.domain.SampleRepository;
 import com.example.samples.domain.ShouhinDaoImpl;
 
 @RestController
-public class RestSampleboot {
+public class RestSamplebootController {
 
-    private static Logger logger = LoggerFactory.getLogger(RestSampleboot.class);
+    private static Logger logger = LoggerFactory.getLogger(RestSamplebootController.class);
+
+    @Autowired
+    HttpSession session;
 
     @Autowired
     SampleRepository sampleService;
@@ -36,6 +40,7 @@ public class RestSampleboot {
 
     @RequestMapping(value = "/")
     String top() {
+        logger.info("session=" + session.getAttribute("TEST_SESSION"));
         return "top";
     }
 

@@ -1,6 +1,7 @@
 package com.example.samples.web;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.BDDMockito.*;
@@ -16,11 +17,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.example.samples.domain.Shouhin;
 import com.example.samples.service.ShouhinService;
+import com.example.samples.web.form.SampleForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,24 +49,103 @@ public class SampleControllerTests {
     }
 
     @Test
-    public void testInitialFindData() throws Exception {
-
+    public void testGet_InitiaPage() throws Exception {
         Shouhin shouhin = new Shouhin();
-        shouhin.setShouhinId("test1");
-        shouhin.setShouhin("test2");
+        shouhin.setShouhinId("");
+        shouhin.setShouhin("");
 
-        given(this.shouhinService.findByShouhinIdAndShouhinVer("00014939", new BigDecimal(1729))).willReturn(shouhin);
+        MvcResult result =  mvc.perform(get("/sample").param("shouhinId", "").param("shouhinName", ""))
+            .andExpect(status().isOk()).andReturn();
 
-        mvc.perform(get("/sample"))
-            .andExpect(status().isOk())
-            .andExpect(content().string(containsString("test1")))
-            .andExpect(content().string(containsString("test2")));
+        ModelMap modelMap = result.getModelAndView().getModelMap();
+        Object object = modelMap.get("sampleForm");
+        assertThat(object, is(instanceOf(SampleForm.class)));
+
+        SampleForm sampleForm = (SampleForm) object;
+        assertThat(sampleForm.getShouhinId(), is(""));
+        assertThat(sampleForm.getShouhinName(), is(""));
     }
 
     @Test
-    public void testInitialNotFoundData() throws Exception {
-        given(this.shouhinService.findByShouhinIdAndShouhinVer("00014939", new BigDecimal(1729))).willReturn(null);
+    public void testGet_findData() throws Exception {
+        Shouhin shouhin = new Shouhin();
+        shouhin.setShouhinId("00014939");
+        shouhin.setShouhin("item00014939");
 
-        mvc.perform(get("/sample")).andExpect(status().isOk()).andExpect(content().string(containsString("shouhinId")));
+        given(this.shouhinService.findByShouhinIdAndShouhinVer("00014939", new BigDecimal(1729))).willReturn(shouhin);
+        MvcResult result = mvc.perform(get("/sample").param("shouhinId", "00014939").param("shouhinName", ""))
+            .andExpect(status().isOk()).andReturn();
+
+        ModelMap modelMap = result.getModelAndView().getModelMap();
+        Object object = modelMap.get("sampleForm");
+        assertThat(object, is(instanceOf(SampleForm.class)));
+
+        SampleForm sampleForm = (SampleForm) object;
+        assertThat(sampleForm.getShouhinId(), is("00014939"));
+        assertThat(sampleForm.getShouhinName(), is("item00014939"));
+    }
+
+    @Test
+    public void testGet_NotFoundData() throws Exception {
+        given(this.shouhinService.findByShouhinIdAndShouhinVer(null, new BigDecimal(1729))).willReturn(null);
+
+        MvcResult result = mvc.perform(get("/sample").param("shouhinId", "").param("shouhinName", ""))
+            .andExpect(status().isOk()).andReturn();
+
+        ModelMap modelMap = result.getModelAndView().getModelMap();
+        Object object = modelMap.get("sampleForm");
+        assertThat(object, is(instanceOf(SampleForm.class)));
+
+        SampleForm sampleForm = (SampleForm) object;
+        assertThat(sampleForm.getShouhinId(), is(""));
+        assertThat(sampleForm.getShouhinName(), is(""));
+    }
+
+    @Test
+    public void testPost_findData() throws Exception {
+        Shouhin shouhin = new Shouhin();
+        shouhin.setShouhinId("00014939");
+        shouhin.setShouhin("input");
+
+        Shouhin findShouhin = new Shouhin();
+        findShouhin.setShouhinId("00014939");
+        findShouhin.setShouhin("db");
+
+        given(this.shouhinService.findByShouhinIdAndShouhinVer("00014939", new BigDecimal(1729))).willReturn(findShouhin);
+        given(this.shouhinService.save(shouhin)).willReturn(shouhin);
+
+        MvcResult result = mvc.perform(post("/sample")
+            .param("shouhinId", "00014939")
+            .param("shouhinName", "input"))
+            .andExpect(status().isOk()).andReturn();
+
+        ModelMap modelMap = result.getModelAndView().getModelMap();
+        Object object = modelMap.get("sampleForm");
+        assertThat(object, is(instanceOf(SampleForm.class)));
+
+        SampleForm sampleForm = (SampleForm) object;
+        assertThat(sampleForm.getShouhinId(), is("00014939"));
+        assertThat(sampleForm.getShouhinName(), is("input"));
+    }
+
+    @Test
+    public void testPost_NotFoundData() throws Exception {
+        Shouhin shouhin = new Shouhin();
+        shouhin.setShouhinId("00014939");
+        shouhin.setShouhin("input");
+
+        given(this.shouhinService.findByShouhinIdAndShouhinVer("00014939", new BigDecimal(1729))).willReturn(null);
+        given(this.shouhinService.save(shouhin)).willReturn(shouhin);
+
+        MvcResult result = mvc.perform(post("/sample").param("shouhinId", "00014939").param("shouhinName", "input"))
+            .andExpect(status().isOk()).andReturn();
+
+        ModelMap modelMap = result.getModelAndView().getModelMap();
+        Object object = modelMap.get("sampleForm");
+        assertThat(object, is(instanceOf(SampleForm.class)));
+
+        SampleForm sampleForm = (SampleForm) object;
+        assertThat(sampleForm.getShouhinId(), is("00014939"));
+        assertThat(sampleForm.getShouhinName(), is("input"));
     }
 }

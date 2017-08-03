@@ -14,9 +14,9 @@ import com.example.samples.domain.Shouhin;
 import com.example.samples.service.ShouhinService;
 
 @RestController
-public class RestShouhin {
+public class RestShouhinContoller {
 
-    private static Logger logger = LoggerFactory.getLogger(RestShouhin.class);
+    private static Logger logger = LoggerFactory.getLogger(RestShouhinContoller.class);
 
     @Autowired
     ShouhinService shouhinService;

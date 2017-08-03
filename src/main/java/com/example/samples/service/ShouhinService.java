@@ -41,4 +41,8 @@ public class ShouhinService {
         this.shouhinDao = new ShouhinDaoImpl(this.entityManager);
         return this.shouhinDao.getDistinctShouhinbunruiList(new BigDecimal(1729));
     }
+
+    public Shouhin save(Shouhin shouhin) {
+        return this.shouhinRepository.saveAndFlush(shouhin);
+    }
 }

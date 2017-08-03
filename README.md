@@ -14,11 +14,8 @@ done.
 * mail
 * spring data rest
 * thymeleaf
-
-next..
-* config
 * test
-
+* validator
 
 ## Sample url
 
